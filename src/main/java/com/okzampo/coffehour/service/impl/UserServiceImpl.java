@@ -2,6 +2,7 @@ package com.okzampo.coffehour.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.okzampo.coffehour.entity.User;
@@ -14,11 +15,15 @@ import com.okzampo.coffehour.service.UserService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-@Service
 @Slf4j
+@Service
 public class UserServiceImpl implements UserService{
 
     private final UserRepository repo;
+
+    UserServiceImpl(UserRepository repo){
+        this.repo = repo;
+    }
 
     @Override
     @SneakyThrows
@@ -52,6 +57,10 @@ public class UserServiceImpl implements UserService{
 
         onDb.setFirstName(user.getFirstName());
         onDb.setLastName(user.getLastName());
+
+        if(user.getPassword() != null && !user.getPassword().isEmpty()){
+            onDb.setPassword(user.getPassword());
+        }
 
         try{
             onDb = repo.save(onDb);

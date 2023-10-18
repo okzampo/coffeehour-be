@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class BaseEntity {
-    
     @Id
     private String id;
 }
